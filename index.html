@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <!-- $Id: index.html,v 0.6 2023/04/11 18:27:52 ps Exp ps $ -->
+    <title>Code generator for CW training</title>
+    <style type="text/css">
+    .bg1 {
+        background: none;
+    }
+    .bg2 {
+        background-color: #f0f0f0;
+    }
+    </style>
+    <script src="libcwcode.js"></script>
+</head>
+<body style="font-family: monospace;">
+    <h1>Code generator for CW training</h1>
+    <p>by Stephan Paukner, OE3SPR</p>
+    <p>Usage: Use the generated, hourly 'codeid' in the URL, or choose your own arbitrary 'codeid' (any string) to share the same random text.</p>
+    <p style="text-align: center;">
+    <input type="checkbox" id="uppercase" checked="checked" onClick="generateCode();">uppercase
+    <input type="checkbox" id="letters" checked="checked" onClick="generateCode();">letters
+    <input type="checkbox" id="figures" checked="checked" onClick="generateCode();">figures
+    <input type="checkbox" id="specialchars" checked="checked" onClick="generateCode();">=/?,.
+    </p>
+    <hr>
+    <p id="text" style="font-size:200%; text-align:center;"></p>
+    <hr>
+    <script>generateCode();</script>
+</body>
+</html>
+
