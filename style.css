@@ -1,0 +1,16 @@
+body {
+    font-family: Courier New, monospace;
+}
+#text {
+    text-align: center;
+    font-size: 200%;
+    font-weight: bold;
+    letter-spacing: 14pt;
+}
+.bg1 {
+    background: none;
+}
+.bg2 {
+    background-color: #f8f8f8;
+}
+

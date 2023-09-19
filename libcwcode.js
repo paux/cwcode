@@ -1,5 +1,4 @@
 /* CWcode by OE3SPR
-   $Id: libcwcode.js,v 0.6 2023/04/11 18:27:41 ps Exp ps $
 */
 
 var wordCount = 60;
