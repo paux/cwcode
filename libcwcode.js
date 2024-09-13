@@ -11,6 +11,7 @@ var useFigures = true;
 var useSpecialChars = true;
 var urlParams = new URLSearchParams(window.location.search);
 var rand;
+var extraChars;
 
 function hash_cyrb128(str) {
     let h1 = 1779033703, h2 = 3144134277,
@@ -50,11 +51,15 @@ function init_rand() {
 
 function generateCode() {
     init_rand();
+    extraChars = urlParams.get('extrachars');
+    if (extraChars) {
+        document.getElementById('extrachars').innerHTML = `&nbsp;extra: ${extraChars}`;
+    }
     uppercase = document.getElementById('uppercase').checked;
     useLetters = document.getElementById('letters').checked;
     useFigures = document.getElementById('figures').checked;
     useSpecialChars = document.getElementById('specialchars').checked;
-    if (!useLetters && !useFigures && !useSpecialChars) {
+    if (!useLetters && !useFigures && !useSpecialChars && !extraChars) {
         useLetters = true;
         useFigures = true;
         useSpecialChars = true;
@@ -72,9 +77,7 @@ function generateWords(wordcnt, wordlen, wordsPerLine) {
         }
     }
     words += '</span>';
-    if (!uppercase) {
-        words = words.toLowerCase();
-    }
+    words = uppercase ? words.toUpperCase() : words.toLowerCase();
     return words.replace(/0/g, '&Oslash;');
 }
 
@@ -91,20 +94,28 @@ function generateWord(len) {
 
 function generateChar() {
     var rnd;
+    var rndRange = 41 + (extraChars ? extraChars.length : 0);
     while (true) {
-        rnd = Math.floor(rand() * 41);
+        rnd = Math.floor(rand() * rndRange);
         if ((rnd < 26 && useLetters)
              || (rnd >= 26 && rnd < 36 && useFigures)
-             || (rnd >= 36 && useSpecialChars)) {
+             || (rnd >= 36 && rnd < 41 && useSpecialChars)
+             || (rnd >= 41)) {
             break;
         }
     }
     if (rnd < 26) {
+        // letter
         return String.fromCharCode(65+rnd);
-    } else if (rnd >= 36) {
-        return ['=', '/', '?', ',', '.'][rnd-36];
-    } else {
+    } else if (rnd >= 26 && rnd < 36) {
+        // figure
         return (35-rnd).toString();
+    } else if (rnd >= 36 && rnd < 41) {
+        // special char
+        return '=/?,.'[rnd-36];
+    } else {
+        // extra char
+        return extraChars[rnd-41];
     }
 }
 

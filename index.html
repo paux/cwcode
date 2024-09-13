@@ -9,11 +9,14 @@
     <h1>Code generator for CW training</h1>
     <p>by Stephan Paukner, OE3SPR</p>
     <p>Usage: Use the generated, hourly 'codeid' in the URL, or choose your own arbitrary 'codeid' (any string) to share the same random text.</p>
+    <p>You can also define your own character pool by appending '&amp;extrachars=' plus the desired characters to the URL.
+       This could also be used to increase the occurence of certain letters or figures.</p>
     <p style="text-align: center;">
     <input type="checkbox" id="uppercase" checked="checked" onClick="generateCode();">uppercase
     <input type="checkbox" id="letters" checked="checked" onClick="generateCode();">letters
     <input type="checkbox" id="figures" checked="checked" onClick="generateCode();">figures
     <input type="checkbox" id="specialchars" checked="checked" onClick="generateCode();">=/?,.
+    <span id="extrachars"></span>
     </p>
     <hr>
     <p id="text"></p>
