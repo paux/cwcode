@@ -51,18 +51,19 @@ function init_rand() {
 
 function generateCode() {
     init_rand();
-    extraChars = urlParams.get('extrachars');
-    if (extraChars) {
-        document.getElementById('extrachars').innerHTML = `&nbsp;extra: ${extraChars}`;
-    }
     uppercase = document.getElementById('uppercase').checked;
     useLetters = document.getElementById('letters').checked;
     useFigures = document.getElementById('figures').checked;
     useSpecialChars = document.getElementById('specialchars').checked;
+    extraChars = urlParams.get('extrachars');
     if (!useLetters && !useFigures && !useSpecialChars && !extraChars) {
         useLetters = true;
         useFigures = true;
         useSpecialChars = true;
+    }
+    if (extraChars) {
+        document.getElementById('extrachars').innerHTML =
+            `&nbsp;extra: ${uppercase ? extraChars.toUpperCase() : extraChars.toLowerCase()}`;
     }
     document.getElementById('text').innerHTML = generateWords(wordCount, wordLength, wordsPerLine);
 }
