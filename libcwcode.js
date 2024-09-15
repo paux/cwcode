@@ -11,6 +11,7 @@ var useFigures = true;
 var useSpecialChars = true;
 var urlParams = new URLSearchParams(window.location.search);
 var rand;
+var codeid;
 var extraChars;
 
 function hash_cyrb128(str) {
@@ -40,22 +41,31 @@ function mulberry32(a) {
     }
 }
 
-function init_rand() {
-    var codeid = urlParams.get('codeid');
-    if (codeid === null) {
+function initRand() {
+    codeid = urlParams.get('codeid');
+    if (!codeid) {
         codeid = new Date().toISOString().substr(0, 13) + ':00';
-        window.location = window.location.pathname + '?codeid=' + codeid;
+        reload();
     }
     rand = mulberry32(hash_cyrb128(codeid));
 }
 
+function refreshCodeid() {
+    codeid = new Date().toISOString().substr(0, 19);
+    reload();
+}
+
+function reload() {
+    window.location = `${window.location.pathname}?codeid=${codeid}${extraChars ? `&extrachars=${extraChars}` : ''}`;
+}
+
 function generateCode() {
-    init_rand();
+    extraChars = urlParams.get('extrachars');
+    initRand();
     uppercase = document.getElementById('uppercase').checked;
     useLetters = document.getElementById('letters').checked;
     useFigures = document.getElementById('figures').checked;
     useSpecialChars = document.getElementById('specialchars').checked;
-    extraChars = urlParams.get('extrachars');
     if (!useLetters && !useFigures && !useSpecialChars && !extraChars) {
         useLetters = true;
         useFigures = true;
